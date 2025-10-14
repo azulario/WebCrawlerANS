@@ -41,3 +41,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Arquivos do Projeto ###
+Downloads/
+src/main/resources/database.properties

@@ -1,0 +1,13 @@
+# Configurações do PostgreSQL
+db.url=jdbc:postgresql://localhost:5432/webcrawler_ans
+db.user=postgres
+db.password=postgres
+db.driver=org.postgresql.Driver
+
+# Configurações de Email (exemplo com Gmail)
+email.host=smtp.gmail.com
+email.port=587
+email.username=seu_email@gmail.com
+email.password=sua_senha_ou_app_password
+email.from=seu_email@gmail.com
+
