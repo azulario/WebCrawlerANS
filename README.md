@@ -1,6 +1,6 @@
 # Web Crawler ANS - Padrão TISS
 
-**Desenvolvido por:** Azulario
+**Desenvolvido por:** Nathalia Veiga
 
 ## Descrição
 
