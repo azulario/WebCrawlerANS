@@ -2,7 +2,7 @@ package com.ans.scraper
 
 import com.ans.scraper.tasks.Task1
 import com.ans.scraper.tasks.Task2
-// import com.ans.scraper.tasks.Task3
+import com.ans.scraper.tasks.Task3
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
@@ -20,7 +20,7 @@ class ANSScraper {
         try {
             executeTask1()
             executeTask2()
-            // executeTask3()
+            executeTask3()
 
             println "\n═══════════════════════════════════════════"
             println "   Execução finalizada com sucesso!"
@@ -51,17 +51,16 @@ class ANSScraper {
 
         println "\n✓ Task 2 concluída\n"
     }
-//
-//
-//    private void executeTask3() {
-//        println "→ Task 3: [Descrição]"
-//        println "─────────────────────────────────────────\n"
-//
-//        Task3 task3 = new Task3(this)
-//        task3.execute()
-//
-//        println "\n✓ Task 3 concluída\n"
-//    }
+
+    private void executeTask3() {
+        println "→ Task 3: Download Tabela de Erros"
+        println "─────────────────────────────────────────\n"
+
+        Task3 task3 = new Task3(this)
+        task3.execute()
+
+        println "\n✓ Task 3 concluída\n"
+    }
 
     // conecta na página e retorna o documento HTML
     Document fetchPage(String url = URL_ANS) {
