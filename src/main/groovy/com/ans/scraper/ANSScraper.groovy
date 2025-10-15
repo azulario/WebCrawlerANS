@@ -1,6 +1,8 @@
 package com.ans.scraper
 
 import com.ans.scraper.tasks.Task1
+import com.ans.scraper.tasks.Task2
+// import com.ans.scraper.tasks.Task3
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
@@ -13,11 +15,11 @@ class ANSScraper {
     void run() {
         println "═══════════════════════════════════════���═══"
         println "   ANS TISS Scraper - Iniciando execução"
-        println "═══════════════════════════════════════════\n"
+        println "═══════════════════════════════════════���═══\n"
 
         try {
             executeTask1()
-            // executeTask2()
+            executeTask2()
             // executeTask3()
 
             println "\n═══════════════════════════════════════════"
@@ -40,15 +42,15 @@ class ANSScraper {
         println "\n✓ Task 1 concluída\n"
     }
 
-//    private void executeTask2() {
-//        println "→ Task 2: [Descrição]"
-//        println "─────────────────────────────────────────\n"
-//
-//        Task2 task2 = new Task2(this)
-//        task2.execute()
-//
-//        println "\n✓ Task 2 concluída\n"
-//    }
+    private void executeTask2() {
+        println "→ Task 2: Coletar Histórico de Versões"
+        println "─────────────────────────────────────────\n"
+
+        Task2 task2 = new Task2(this)
+        task2.execute()
+
+        println "\n✓ Task 2 concluída\n"
+    }
 //
 //
 //    private void executeTask3() {

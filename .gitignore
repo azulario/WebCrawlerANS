@@ -29,4 +29,4 @@ database.properties
 !database.properties.example
 
 # Documentos pra estudo
-VISUALIZACAO_PDF_PROBLEMA.md
+doc/
