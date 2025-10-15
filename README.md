@@ -4,61 +4,30 @@
 
 ## Descrição
 
-Bot/Web Crawler para coletar dados do site da Agência Nacional de Saúde (ANS) relacionados ao padrão TISS (Troca de Informações na Saúde Suplementar).
+Web Scraper modular para coletar dados e arquivos do site da Agência Nacional de Saúde (ANS) relacionados ao padrão TISS (Troca de Informações na Saúde Suplementar).
 
 ## Funcionalidades
 
 ### Tasks Implementadas
 
-1. **Task 1:** Baixar o Componente de Comunicação do padrão TISS
+1. **Task 1:** Baixar todos os Componentes TISS da versão mais recente
+   - Componente Organizacional (PDF)
+   - Componente de Conteúdo e Estrutura (ZIP)
+   - Componente de Segurança (ZIP)
+   - Componente de Comunicação (ZIP)
 2. **Task 2:** Coletar histórico de versões do padrão TISS (a partir de jan/2016)
 3. **Task 3:** Baixar a Tabela de Erros no envio para ANS
-
-### Recursos Extras
-
-- **CRUD de Emails:** Gerenciamento completo de emails interessados
-- **Envio de Relatórios:** Envia automaticamente os arquivos coletados por email
-- **Banco de Dados PostgreSQL:** Armazena emails de forma persistente
 
 ## Tecnologias Utilizadas
 
 - **Groovy** - Linguagem principal
 - **Jsoup** - Parser HTML para Web Scraping
-- **PostgreSQL** - Banco de dados
-- **JavaMail** - Envio de emails
-- **Gradle** - Gerenciamento de dependências
+- **Gradle** - Gerenciamento de dependências e build
 
 ## Pré-requisitos
 
 - Java 11 ou superior
-- PostgreSQL instalado e rodando
 - Gradle (incluído via wrapper)
-
-## Configuração
-
-### 1. Criar o banco de dados
-
-```sql
-CREATE DATABASE webcrawler_ans;
-```
-
-### 2. Configurar credenciais
-
-Edite o arquivo `src/main/resources/database.properties`:
-
-```properties
-# PostgreSQL
-db.url=jdbc:postgresql://localhost:5432/webcrawler_ans
-db.user=postgres
-db.password=sua_senha
-
-# Email (opcional - para envio de relatórios)
-email.host=smtp.gmail.com
-email.port=587
-email.username=seu_email@gmail.com
-email.password=sua_senha_app
-email.from=seu_email@gmail.com
-```
 
 ## Como Executar
 
@@ -71,42 +40,50 @@ email.from=seu_email@gmail.com
 ### Via IntelliJ IDEA
 
 1. Abra o projeto
-2. Execute a classe `Main.groovy`
+2. Execute a classe `ANSScraper.groovy`
 
 ## Estrutura do Projeto
 
 ```
-src/main/groovy/
-├── Main.groovy                    # Classe principal
-├── crawler/
-│   └── ANSCrawler.groovy         # Web Crawler
-├── model/
-│   └── Email.groovy              # Modelo de dados
-├── repository/
-│   └── EmailRepository.groovy    # CRUD no banco
-└── service/
-    └── EmailService.groovy       # Envio de emails
+src/main/groovy/com/ans/scraper/
+├── ANSScraper.groovy              # Orquestradora + métodos utilitários
+└── tasks/
+    ├── Task1.groovy               # Download de componentes TISS
+    ├── Task2.groovy               # Histórico de versões
+    └── Task3.groovy               # Tabela de erros
 
-Downloads/                         # Arquivos baixados
-├── Arquivos_padrao_TISS/
-├── Tabelas_relacionadas/
-└── historico_versoes_TISS.csv
+Downloads/                          # Arquivos baixados
+└── Componentes_TISS/
+    ├── PadroTISS_ComponenteOrganizacional_202509.pdf
+    ├── PadroTISS_ComponentedeContedoeEstrutura_202505.zip
+    ├── PadroTISS_segurana_202305.zip
+    └── PadroTISSComunicao202505.zip
 ```
 
-## Menu do Sistema
+## Arquitetura
 
-1. **Executar Web Crawler** - Baixa todos os arquivos da ANS
-2. **Gerenciar Emails (CRUD)** - Adicionar, listar, atualizar e deletar emails
-3. **Sair** - Encerra o programa
+### ANSScraper (Classe Principal)
+- **Orquestradora:** Executa todas as tasks em sequência
+- **Métodos utilitários:**
+  - `fetchPage(url)` - Busca e retorna documento HTML
+  - `fetchFile(url)` - Baixa arquivo binário (PDF, ZIP, etc)
+  - `saveFile(bytes, folder, fileName)` - Salva arquivo em disco
 
-## Observações
+### Tasks (Módulos Independentes)
+Cada task é uma classe separada que recebe uma instância do `ANSScraper` e implementa sua própria lógica de scraping.
+
+**Vantagens:**
+- Modularidade: fácil adicionar novas tasks
+- Reutilização: ANSScraper fornece métodos comuns
+- Manutenção: cada task tem responsabilidade única
+
+## Observações Técnicas
 
 - Os arquivos baixados são salvos na pasta `Downloads/`
-- O histórico de versões é salvo em formato CSV
-- Para enviar emails, configure um App Password do Gmail
-- A tabela de emails é criada automaticamente no primeiro uso
+- PDFs são detectados e baixados diretamente (ver `VISUALIZACAO_PDF_PROBLEMA.md`)
+- Timeout de 40 segundos para requisições
+- Logs formatados para facilitar acompanhamento da execução
 
 ## Autor
 
-**Azulario** - Projeto desenvolvido para aprendizado de Web Scraping
-
+**Nathalia Veiga** - Projeto desenvolvido para aprendizado de Web Crawler/Scraping pro Acelera ZG.
