@@ -29,7 +29,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'Main'
+    mainClass = 'com.ans.scraper.ANSScraper'
 }
 
 test {
